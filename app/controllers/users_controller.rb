@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!, only: [:edit, :update, :destroy, :profile]
   before_action :find_user, only: [:show, :edit, :update, :destroy]
   before_action :find_users, only: [:index]
 
@@ -32,13 +33,16 @@ class UsersController < ApplicationController
   def destroy
     if @new_user.destroy
       find_users
-      render action: "index"
+      render action: "items/index"
     else
       render "show"
     end
   end
 
   def index
+  end
+
+  def profile
   end
 
   private

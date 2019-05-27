@@ -1,0 +1,20 @@
+%br/
+.container
+  .row
+    .card{:style => "width: 23rem;"}
+      .card-body
+        %h2 Sign Up Now!
+        = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+          = f.error_notification
+          .form-inputs
+            = f.input :email,
+              autofocus: true,
+              input_html: { autocomplete: "email" }
+            = f.input :password,
+              hint: ("8 characters minimum"),
+              input_html: { autocomplete: "new-password" }
+            = f.input :password_confirmation,
+              input_html: { autocomplete: "new-password" }
+          .form-actions
+            = f.button :submit, "Sign up", :class => 'btn btn-primary'
+          = render "users/shared/links"
