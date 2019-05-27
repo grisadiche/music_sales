@@ -2,14 +2,33 @@
   .container
     %h1.jumbotron-heading List of Equipment
     %p.lead.text-muted Below is the entire inventory of available equipment.
-    %p
-      %a= link_to "Add a new item", new_item_path, :class => 'btn btn-primary my-2'
+    .d-flex.justify-content-center
+      .btn-toolbar{"aria-label" => "Toolbar with button groups", :role => "toolbar"}
+        .btn-group.mr-2{"aria-label" => "First group", :role => "group"}
+          %a= link_to "Add a new item", new_item_path, :class => 'btn btn-primary my-2'
+        .btn-group.mr-2{"aria-label" => "First group", :role => "group"}
+          .dropdown
+          %button#dropdownMenuButton.btn.btn-secondary.my-2.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"} Sort By:
+          .dropdown-menu{"aria-labelledby" => "dropdownMenuButton"}
+            %a.dropdown-item{:href => "#"} Price (Low - High)
+            %a.dropdown-item{:href => "#"} Price (High - Low)
+            %a.dropdown-item{:href => "#"} Manufacturer (A-Z)
+            %a.dropdown-item{:href => "#"} Manufacturer (Z-A)
+//sort the @items array for each?
 
-- @items.each do |x|
-  %p
-    %span= x.id
-    %span= x.model
-    %span= x.serial_number
-    %a= link_to "Edit Item", edit_item_path(x), :class => 'btn btn-default'
-    %a= link_to "Show Item", item_path(x), :class => 'btn btn-default'
-    %a= link_to "Delete Item", item_path(x), method: :delete, data: { confirm: "Are you sure you'd like to delete?" }, :class => 'btn btn-danger'
+.album.py-5.bg-light
+  .container
+    .row
+      - @items.each do |x|
+        .card{:style => "width: 22rem;"}
+          %img.card-img-top{:alt => "Card image cap", :width => "240", :height => "320", :src => "#{x.photo_link}"}
+            %title x.id
+            %rect{:fill => "#55595c", :height => "100%", :width => "100%"}
+            .card-body
+              %p.card-text= link_to "#{x.manufacturer} #{x.model}", item_path(x), :class => 'btn btn-outline-dark'
+              .d-flex.justify-content-between.align-items-center
+                .btn-group
+                  %a= link_to "Show Item", item_path(x), :class => 'btn btn-default btn-sm'
+                  %a= link_to "Edit Item", edit_item_path(x), :class => 'btn btn-default btn-sm'
+                  %a= link_to "Delete Item", item_path(x), method: :delete, data: { confirm: "Are you sure you'd like to delete?" }, :class => 'btn btn-danger btn-sm'
+                %small.text-muted= "$" + x.price.to_s

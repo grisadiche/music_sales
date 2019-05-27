@@ -1,8 +1,15 @@
-= simple_form_for @new_item do |f|
-  = f.input :manufacturer
-  = f.input :model
-  = f.input :price
-  = f.input :weight
-  = f.input :description
-  = f.input :serial_number
-  = f.button :submit, :class => 'btn btn-default'
+.container
+  .row
+    .card{:style => "width: 23rem;"}
+      .card-body
+        %a= link_to "Back to List", items_path, :class => 'btn btn-default'
+        = simple_form_for @new_item do |f|
+          = f.input :manufacturer, placeholder: "Eg. Gibson"
+          = f.input :model
+          = f.input :price
+          = f.input :weight
+          = f.input :description
+          = f.input :serial_number
+          = f.input :color
+          = f.input :photo_link
+          = f.button :submit, :class => 'btn btn-primary'

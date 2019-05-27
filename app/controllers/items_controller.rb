@@ -23,7 +23,7 @@ class ItemsController < ApplicationController
 
   def update
     if @new_item.update(safe_params)
-      redirect_to "show"
+      redirect_to @new_item
     else
       render "edit"
     end
@@ -48,7 +48,7 @@ class ItemsController < ApplicationController
   end
 
   def safe_params
-    params.require(:item).permit(:manufacturer, :model, :weight, :price, :description, :serial_number)
+    params.require(:item).permit(:manufacturer, :model, :weight, :price, :description, :serial_number, :color, :photo_link)
   end
 
   def find_items
