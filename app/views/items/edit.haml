@@ -1,2 +1,5 @@
-%h1= "Edit the #{@new_item.model}"
+%section.jumbotron.text-left-center
+  .container
+    %h1.jumbotron-heading Edit the #{@new_item.model}
+    %a= link_to "Back to List", items_path, :class => 'btn btn-default'
 = render "form"

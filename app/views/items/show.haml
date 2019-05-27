@@ -1,11 +1,20 @@
-%h1= @new_item.model
-%ul
-  %a= link_to "Back to List", items_path, :class => 'btn btn-default'
-  %li= @new_item.manufacturer
-  %li= @new_item.price
-  %li= @new_item.description
-  %li= @new_item.weight
-  %li= @new_item.serial_number
-  %a= link_to "Edit Item", edit_item_path, :class => 'btn btn-default'
-
-
+%section.jumbotron.text-center
+  .container
+    %h1.jumbotron-heading #{@new_item.manufacturer} #{@new_item.model}
+    %h3.text.muted $#{@new_item.price.to_s}
+    %br
+    .btn-group
+      %a= link_to "Back to List", items_path(), :class => 'btn btn-default btn-sm'
+      -if current_user&.id == @new_item.user_id
+        %a= link_to "Edit Item", edit_item_path(@new_item), :class => 'btn btn-default btn-sm'
+        %a= link_to "Delete Item", item_path(@new_item), method: :delete, data: { confirm: "Are you sure you'd like to delete?" }, :class => 'btn btn-danger btn-sm'
+.container
+  .text-center
+    %img.img-fluid{:alt => "Responsive image", :src => "#{@new_item.photo_link}"}
+    .text-center
+      %ul.list-group
+        %li.list-group-item= "Description: " + @new_item.description
+        %li.list-group-item= "Serial Number: " + @new_item.serial_number
+        - owner = User.find_by(id: @new_item.user_id)
+        %li.list-group-item= link_to "Owner: #{owner.email}", user_path(id: owner.id)
+        / how to create view of items only belonging to this user?
