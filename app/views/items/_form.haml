@@ -2,14 +2,21 @@
   .row
     .card{:style => "width: 23rem;"}
       .card-body
-        %a= link_to "Back to List", items_path, :class => 'btn btn-default'
         = simple_form_for @new_item do |f|
           = f.input :manufacturer, placeholder: "Eg. Gibson"
-          = f.input :model
-          = f.input :price
+          = f.input :model, placeholder: "Eg. Les Paul"
+          = f.input :price, placeholder: "$USD"
           = f.input :weight
           = f.input :description
           = f.input :serial_number
           = f.input :color
           = f.input :photo_link
-          = f.button :submit, :class => 'btn btn-primary'
+          .btn-toolbar{"aria-label" => "Toolbar with button groups", :role => "toolbar"}
+            .btn-group.mr-2{"aria-label" => "First group", :role => "group"}= f.button :submit, :class => 'btn btn-primary'
+            .btn-group.mr-2{"aria-label" => "Second group", :role => "group"}
+            %a= link_to "Back to List", items_path, :class => 'btn btn-default'
+
+
+
+/ = simple_form_for @new_item, html: { class: 'form-inline' }) do |form|
+/   = f.input :manufacturer

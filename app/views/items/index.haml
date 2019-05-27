@@ -14,18 +14,17 @@
             %a.dropdown-item{:href => "#"} Price (High - Low)
             %a.dropdown-item{:href => "#"} Manufacturer (A-Z)
             %a.dropdown-item{:href => "#"} Manufacturer (Z-A)
-//sort the @items array for each?
+//re-load items_path with new @items array. sort the @items array for each? or sort within sql?
 
 .album.py-5.bg-light
   .container
     .row
       - @items.each do |x|
         .card{:style => "width: 22rem;"}
+          .card-header= link_to "#{x.manufacturer} #{x.model}", item_path(x), :class => 'btn btn-outline-secondary'
           %img.card-img-top{:alt => "Card image cap", :width => "240", :height => "320", :src => "#{x.photo_link}"}
-            %title x.id
-            %rect{:fill => "#55595c", :height => "100%", :width => "100%"}
             .card-body
-              %p.card-text= link_to "#{x.manufacturer} #{x.model}", item_path(x), :class => 'btn btn-outline-dark'
+              %p.card-text= "#{x.description}"
               .d-flex.justify-content-between.align-items-center
                 .btn-group
                   %a= link_to "Show Item", item_path(x), :class => 'btn btn-default btn-sm'
