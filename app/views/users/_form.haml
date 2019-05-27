@@ -1,0 +1,8 @@
+.container
+  .row
+    .card{:style => "width: 23rem;"}
+      .card-body
+        = simple_form_for @new_user do |f|
+          = f.input :username
+          = f.input :password
+          = f.button :submit, :class => "btn btn-primary"

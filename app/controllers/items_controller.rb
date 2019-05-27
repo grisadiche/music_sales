@@ -38,6 +38,10 @@ class ItemsController < ApplicationController
     end
   end
 
+  def sort
+    @sort_option = "price_high"
+  end
+
   def index
   end
 
@@ -52,6 +56,17 @@ class ItemsController < ApplicationController
   end
 
   def find_items
-    @items = Item.all
+    case @sort_option
+    when "price_high"
+      @items = Item.all.sort_by(&:price).reverse
+    when "price_low"
+      @items = Item.all.sort_by(&:price)
+    when "alpha_reverse"
+      @items = Item.all.sort_by(&:manufacturer).reverse
+    when "alpha_default"
+      @items = Item.all.sort_by(&:manufacturer)
+    else
+      @items = Item.all.sort_by(&:id).reverse
+    end
   end
 end

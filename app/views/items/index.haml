@@ -1,5 +1,6 @@
 %section.jumbotron.text-center
   .container
+    = "#{@sort_option}"
     %h1.jumbotron-heading List of Equipment
     %p.lead.text-muted Below is the entire inventory of available equipment.
     .d-flex.justify-content-center
@@ -10,10 +11,10 @@
           .dropdown
           %button#dropdownMenuButton.btn.btn-secondary.my-2.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"} Sort By:
           .dropdown-menu{"aria-labelledby" => "dropdownMenuButton"}
-            %a.dropdown-item{:href => "#"} Price (Low - High)
-            %a.dropdown-item{:href => "#"} Price (High - Low)
-            %a.dropdown-item{:href => "#"} Manufacturer (A-Z)
-            %a.dropdown-item{:href => "#"} Manufacturer (Z-A)
+            %a.dropdown-item{:href => items_path} Price (Low - High)
+            %a.dropdown-item{:href => items_path} Price (High - Low)
+            %a.dropdown-item{:href => items_path} Manufacturer (A-Z)
+            %a.dropdown-item{:href => items_path} Manufacturer (Z-A)
 //re-load items_path with new @items array. sort the @items array for each? or sort within sql?
 
 .album.py-5.bg-light

@@ -1,0 +1,25 @@
+%section.jumbotron.text-center
+  .container
+    %h1.jumbotron-heading #{@new_user.username}
+    %br
+    //only show this group if signed in?
+    .btn-group
+      %a= link_to "Back to List", users_path(@new_user), :class => 'btn btn-default btn-sm'
+      %a= link_to "Edit User", edit_user_path(@new_user), :class => 'btn btn-default btn-sm'
+      /require password
+      %a= link_to "Delete User", user_path(@new_user), method: :delete, data: { confirm: "Are you sure you'd like to delete?" }, :class => 'btn btn-danger btn-sm'
+      /require password
+    .d-flex.justify-content-center
+      .btn-toolbar{"aria-label" => "Toolbar with button groups", :role => "toolbar"}
+        .btn-group.mr-2{"aria-label" => "First group", :role => "group"}
+          %a= link_to "Add a new item", new_item_path, :class => 'btn btn-primary my-2'
+        .btn-group.mr-2{"aria-label" => "First group", :role => "group"}
+          .dropdown
+          %button#dropdownMenuButton.btn.btn-secondary.my-2.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"} Sort By:
+          .dropdown-menu{"aria-labelledby" => "dropdownMenuButton"}
+            %a.dropdown-item{:href => "#"} Price (Low - High)
+            %a.dropdown-item{:href => "#"} Price (High - Low)
+            %a.dropdown-item{:href => "#"} Manufacturer (A-Z)
+            %a.dropdown-item{:href => "#"} Manufacturer (Z-A)
+
+/display users equipment
