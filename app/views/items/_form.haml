@@ -1,8 +1,8 @@
 = simple_form_for @new_item do |f|
-  = f.input :model
   = f.input :manufacturer
+  = f.input :model
   = f.input :price
   = f.input :weight
   = f.input :description
   = f.input :serial_number
-  = f.button :submit
+  = f.button :submit, :class => 'btn btn-default'
