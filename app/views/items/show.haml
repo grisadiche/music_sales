@@ -1,0 +1,11 @@
+%h1= @new_item.model
+%ul
+  %a= link_to "Back to List", items_path
+  %li= @new_item.manufacturer
+  %li= @new_item.price
+  %li= @new_item.description
+  %li= @new_item.weight
+  %li= @new_item.serial_number
+  %a= link_to "Edit Item", edit_item_path
+
+
