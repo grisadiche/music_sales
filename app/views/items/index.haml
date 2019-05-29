@@ -29,6 +29,7 @@
               .d-flex.justify-content-between.align-items-center
                 .btn-group
                   %a= link_to "Show Item", item_path(x), :class => 'btn btn-default btn-sm'
-                  %a= link_to "Edit Item", edit_item_path(x), :class => 'btn btn-default btn-sm'
-                  %a= link_to "Delete Item", item_path(x), method: :delete, data: { confirm: "Are you sure you'd like to delete?" }, :class => 'btn btn-danger btn-sm'
+                  - if current_user&.id == x.user_id
+                    %a= link_to "Edit Item", edit_item_path(x), :class => 'btn btn-default btn-sm'
+                    %a= link_to "Delete Item", item_path(x), method: :delete, data: { confirm: "Are you sure you'd like to delete?" }, :class => 'btn btn-danger btn-sm'
                 %small.text-muted= "$" + x.price.to_s

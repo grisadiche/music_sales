@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_item, only: [:show, :edit, :update, :destroy]
   before_action :find_items, only: [:index]
 
@@ -7,11 +8,12 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @new_item = Item.new(safe_params)
+    @new_item = current_user.items.build(safe_params)
     if @new_item.save
       redirect_to @new_item
     else
       render "new"
+
     end
   end
 
@@ -38,10 +40,6 @@ class ItemsController < ApplicationController
     end
   end
 
-  def sort
-    @sort_option = "price_high"
-  end
-
   def index
   end
 
@@ -52,21 +50,10 @@ class ItemsController < ApplicationController
   end
 
   def safe_params
-    params.require(:item).permit(:manufacturer, :model, :weight, :price, :description, :serial_number, :color, :photo_link, :user_id)
+    params.require(:item).permit(:manufacturer, :model, :weight, :price, :description, :serial_number, :color, :photo_link)
   end
 
   def find_items
-    case @sort_option
-    when "price_high"
-      @items = Item.all.sort_by(&:price).reverse
-    when "price_low"
-      @items = Item.all.sort_by(&:price)
-    when "alpha_reverse"
-      @items = Item.all.sort_by(&:manufacturer).reverse
-    when "alpha_default"
-      @items = Item.all.sort_by(&:manufacturer)
-    else
-      @items = Item.all.sort_by(&:id).reverse
-    end
+    @items = Item.where(user: current_user)
   end
 end
