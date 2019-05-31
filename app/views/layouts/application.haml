@@ -1,0 +1,30 @@
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title MusicSales
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    %nav.navbar.navbar-light.bg-light
+      %span.navbar-brand.mb-0.h1 Sell Yo Shit
+      %span
+        Hello, #{current_user&.email || "anonymous person"}
+        - if user_signed_in?
+          %a.btn.btn-danger.btn-sm{"data-method" => "delete", :href => "#{destroy_user_session_path}"}
+            Log Out
+        - else
+          %a.btn.btn-primary.btn-sm{:href => "#{new_user_session_path}"}
+            Log In
+          - if controller_name != 'registrations'
+            %a.btn.btn-secondary.btn-sm{:href => "#{new_user_registration_path}"} Sign Up
+          - if controller_name != 'items' && controller_name != 'welcome'
+            %a.btn.btn-secondary.btn-sm{:href => "#{items_path}"} Item List
+    - if flash[:notice]
+      .alert.alert-secondary{:role => "alert"}= flash[:notice]
+    - if flash[:success]
+      .alert.alert-success{:role => "alert"}= flash[:success]
+    - if flash[:alert]
+      .alert.alert-danger{:role => "alert"}= flash[:alert]
+    = yield

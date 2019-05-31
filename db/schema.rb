@@ -27,7 +27,9 @@ ActiveRecord::Schema.define(version: 2019_05_29_010114) do
     t.string "photo_link"
     t.string "color"
     t.bigint "user_id"
+    t.bigint "user_id_id"
     t.index ["user_id"], name: "index_items_on_user_id"
+    t.index ["user_id_id"], name: "index_items_on_user_id_id"
   end
 
   create_table "users", force: :cascade do |t|

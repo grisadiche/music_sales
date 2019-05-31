@@ -1,7 +1,8 @@
 class WelcomeController < ApplicationController
   def welcome
     @items = Item.all
-    flash[:notice] = "flash noticed"
-    render "items/index"
+    if current_user&.id
+      flash[:success] = "You are logged in as #{current_user.email}"
+    end
   end
 end

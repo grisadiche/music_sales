@@ -2,7 +2,10 @@
   .container
     = "#{@sort_option}"
     %h1.jumbotron-heading List of Equipment
-    %p.lead.text-muted Below is the entire inventory of available equipment.
+    - if user_signed_in?
+      %p.lead.text-muted Below is your inventory of available equipment.
+    - else
+      %p.lead.text-muted Below is the entire inventory of available equipment.
     .d-flex.justify-content-center
       .btn-toolbar{"aria-label" => "Toolbar with button groups", :role => "toolbar"}
         .btn-group.mr-2{"aria-label" => "First group", :role => "group"}
