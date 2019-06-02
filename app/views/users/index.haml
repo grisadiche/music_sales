@@ -1,0 +1,9 @@
+%section.jumbotron.text-center
+  .container
+    %h1.jumbotron-heading List of Users
+    %p.lead.text-muted Below is the list of all users who have equipment on the site.
+
+%ul.list-group
+-@users.each do |user|
+  %a.list-group-item.list-group-item-action.active{:href => user_path(user)}
+    #{user.username}
