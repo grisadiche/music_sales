@@ -8,12 +8,16 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
     %nav.navbar.navbar-light.bg-light
-      %span.navbar-brand.mb-0.h1 Sell Yo Shit
+      %span
+        .navbar-brand.mb-0.h1 Sell Yo Shit
+        %a.btn.btn-secondary.btn-sm{:href => "#{items_path}"} Shit thats fo sale
       %span
         Hello, #{current_user&.email || "anonymous person"}
         - if user_signed_in?
           %a.btn.btn-danger.btn-sm{"data-method" => "delete", :href => "#{destroy_user_session_path}"}
             Log Out
+          %a.btn.btn-primary.btn-sm{:href => "#{profile_users_path}", :params => current_user.id}
+            Profile Page
         - else
           %a.btn.btn-primary.btn-sm{:href => "#{new_user_session_path}"}
             Log In
@@ -27,4 +31,6 @@
       .alert.alert-success{:role => "alert"}= flash[:success]
     - if flash[:alert]
       .alert.alert-danger{:role => "alert"}= flash[:alert]
+    - if flash[:error]
+      .alert.alert-danger{:role => "error"}= flash[:error]
     = yield

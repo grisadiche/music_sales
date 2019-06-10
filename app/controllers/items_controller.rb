@@ -10,12 +10,11 @@ class ItemsController < ApplicationController
   def create
     @new_item = current_user.items.build(safe_params)
     if @new_item.save
-      flash.now[:success] = "You added a #{@new_item.model} for: #{current_user.email}."
+      flash[:success] = "You added a #{@new_item.model} for: #{current_user.email}."
       redirect_to @new_item
     else
       flash.now[:error] = "We were unable to add a new item - please try again"
       render "new"
-
     end
   end
 
@@ -40,7 +39,7 @@ class ItemsController < ApplicationController
     if @new_item.destroy
       flash.now[:alert] = "You deleted the #{deleted_model}!"
       find_items
-      render "items/index"
+      render "users/profile"
 
     else
       flash.now[:error] = "unable to delete item"
@@ -58,14 +57,29 @@ class ItemsController < ApplicationController
   end
 
   def safe_params
-    params.require(:item).permit(:manufacturer, :model, :weight, :price, :description, :serial_number, :color, :photo_link)
+    params.require(:item).permit(:manufacturer, :model, :weight, :price, :description, :serial_number, :color, :image)
   end
 
   def find_items
     if current_user
-      @items = Item.where(user: current_user)
+      items = Item.where.not(user_id: current_user.id)
     else
-      @items = Item.all
+      items = Item.all
+    end
+
+    sort = params[:sort]
+
+    case sort
+      when "price_low"
+        @items = items.page(params[:page]).order('price ASC')
+      when "price_high"
+        @items = items.page(params[:page]).order('price DESC')
+      when "manufacturer_asc"
+        @items = items.page(params[:page]).order('manufacturer ASC')
+      when "manufacturer_desc"
+        @items = items.page(params[:page]).order('manufacturer DESC')
+      else
+        @items = items.page(params[:page]).order('id DESC')
     end
   end
 end
