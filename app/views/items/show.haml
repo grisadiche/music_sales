@@ -4,13 +4,15 @@
     %h3.text.muted $#{@new_item.price.to_s}
     %br
     .btn-group
-      %a= link_to "Back to List", items_path(), :class => 'btn btn-default btn-sm'
       -if current_user&.id == @new_item.user_id
+        %a= link_to "Back to List", profile_users_path(), :class => 'btn btn-default btn-sm'
         %a= link_to "Edit Item", edit_item_path(@new_item), :class => 'btn btn-default btn-sm'
         %a= link_to "Delete Item", item_path(@new_item), method: :delete, data: { confirm: "Are you sure you'd like to delete?" }, :class => 'btn btn-danger btn-sm'
+      -else
+        %a= link_to "Back to List", items_path(), :class => 'btn btn-default btn-sm'
 .container
   .text-center
-    %img.img-fluid{:alt => "Responsive image", :src => "#{@new_item.photo_link}"}
+    %img.img-fluid{:alt => "Responsive image", :src => "#{(url_for(@new_item.image))}"}
     .text-center
       %ul.list-group
         %li.list-group-item= "Description: " + @new_item.description

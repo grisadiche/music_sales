@@ -1,22 +1,24 @@
--items = sort_items(params[:sort], @new_user.id)
+-items = sort_items(params[:sort], current_user.id)
 
 %section.jumbotron.text-center
   .container
-    %h1.jumbotron-heading #{@new_user.email}
-    %br
-    %p.lead.text-muted Below is the inventory of available equipment for #{@new_user.email}.
+    %h1 Profile Page for: #{current_user.email}
+    .d-flex.justify-content-center
+      .btn-group{"aria-label" => "button group", :role => "group"}
+        %a= link_to "Edit User Info", edit_user_registration_path, :class => 'btn btn-secondary my-2'
+        %a= link_to "Delete User", user_path(current_user), method: :delete, data: { confirm: "Are you sure you'd like to delete?" }, :class => 'btn btn-danger my-2'
     .d-flex.justify-content-center
       .btn-toolbar{"aria-label" => "Toolbar with button groups", :role => "toolbar"}
         .btn-group.mr-2{"aria-label" => "First group", :role => "group"}
-          %a= link_to "Back To All Items", items_path, :class => 'btn btn-light my-2'
-        .btn-group.mr-2{"aria-label" => "Second group", :role => "group"}
+          %a= link_to "Add a new item", new_item_path, :class => 'btn btn-primary my-2 btn-lg'
+        .btn-group.mr-2{"aria-label" => "First group", :role => "group"}
           .dropdown
-          %button#dropdownMenuButton.btn.btn-secondary.my-2.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"} Sort By:
+          %button#dropdownMenuButton.btn.btn-secondary.my-2.btn-lg.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"} Sort Items:
           .dropdown-menu{"aria-labelledby" => "dropdownMenuButton"}
-            %a.dropdown-item= link_to "Price (Low - High)", user_path(:sort => "price_low")
-            %a.dropdown-item= link_to "Price (High - Low)", user_path(:sort => "price_high")
-            %a.dropdown-item= link_to "Manufacturer (A-Z)", user_path(:sort => "manufacturer_asc")
-            %a.dropdown-item= link_to "Manufacturer (Z-A)", user_path(:sort => "manufacturer_desc")
+            %a.dropdown-item= link_to "Price (Low - High)", profile_users_path(id: current_user.id, :sort => "price_low")
+            %a.dropdown-item= link_to "Price (High - Low)", profile_users_path(id: current_user.id, :sort => "price_high")
+            %a.dropdown-item= link_to "Manufacturer (A-Z)", profile_users_path(id: current_user.id, :sort => "manufacturer_asc")
+            %a.dropdown-item= link_to "Manufacturer (Z-A)", profile_users_path(id: current_user.id, :sort => "manufacturer_desc")
     .d-flex.justify-content-center
       = will_paginate items, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
 

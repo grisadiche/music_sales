@@ -9,6 +9,10 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
   resources :items
-  resources :users
 
+  resources :users do
+    collection do
+      get "profile"
+    end
+  end
 end
