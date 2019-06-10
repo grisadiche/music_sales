@@ -70,10 +70,10 @@ gem "haml-rails", "~> 2.0"
 gem 'simple_form'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
-gem 'bootstrap-sass', '~> 3.4.1'
 gem 'sassc-rails', '>= 2.1.0'
 gem 'devise'
 gem "aws-sdk-s3", require: false
 gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap4'
+gem 'rubocop-rails'
 
