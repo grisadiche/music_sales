@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:edit, :update, :destroy, :profile]
-  before_action :find_user, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: %i[edit update destroy profile]
+  before_action :find_user, only: %i[show edit update destroy]
   before_action :find_users, only: [:index]
 
   def new
@@ -12,38 +14,34 @@ class UsersController < ApplicationController
     if @new_user.save
       redirect_to @new_user
     else
-      render "new"
+      render 'new'
     end
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @new_user.update(safe_params)
       redirect_to @new_user
     else
-      render "edit"
+      render 'edit'
     end
   end
 
   def destroy
     if @new_user.destroy
       find_users
-      render action: "items/index"
+      render action: 'items/index'
     else
-      render "show"
+      render 'show'
     end
   end
 
-  def index
-  end
+  def index; end
 
-  def profile
-  end
+  def profile; end
 
   private
 

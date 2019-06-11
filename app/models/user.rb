@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -5,5 +7,4 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
 
   has_many :items, dependent: :destroy
-
 end

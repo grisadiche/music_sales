@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
-  before_action :find_item, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: %i[new edit update destroy]
+  before_action :find_item, only: %i[show edit update destroy]
   before_action :find_items, only: [:index]
 
   def new
@@ -13,24 +15,22 @@ class ItemsController < ApplicationController
       flash[:success] = "You added a #{@new_item.model} for: #{current_user.email}."
       redirect_to @new_item
     else
-      flash.now[:error] = "We were unable to add a new item - please try again"
-      render "new"
+      flash.now[:error] = 'We were unable to add a new item - please try again'
+      render 'new'
     end
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @new_item.update(safe_params)
       flash[:success] = "You updated the #{@new_item.model}"
       redirect_to @new_item
     else
-      flash.now[:alert] = "Could not update the item, please try again"
-      render "edit"
+      flash.now[:alert] = 'Could not update the item, please try again'
+      render 'edit'
     end
   end
 
@@ -39,16 +39,15 @@ class ItemsController < ApplicationController
     if @new_item.destroy
       flash.now[:alert] = "You deleted the #{deleted_model}!"
       find_items
-      render "users/profile"
+      render 'users/profile'
 
     else
-      flash.now[:error] = "unable to delete item"
-      render "show"
+      flash.now[:error] = 'unable to delete item'
+      render 'show'
     end
   end
 
-  def index
-  end
+  def index; end
 
   private
 
@@ -61,25 +60,25 @@ class ItemsController < ApplicationController
   end
 
   def find_items
-    if current_user
-      items = Item.where.not(user_id: current_user.id)
-    else
-      items = Item.all
-    end
+    items = if current_user
+              Item.where.not(user_id: current_user.id)
+            else
+              Item.all
+            end
 
     sort = params[:sort]
 
-    case sort
-      when "price_low"
-        @items = items.page(params[:page]).order('price ASC')
-      when "price_high"
-        @items = items.page(params[:page]).order('price DESC')
-      when "manufacturer_asc"
-        @items = items.page(params[:page]).order('manufacturer ASC')
-      when "manufacturer_desc"
-        @items = items.page(params[:page]).order('manufacturer DESC')
-      else
-        @items = items.page(params[:page]).order('id DESC')
-    end
+    @items = case sort
+             when 'price_low'
+               items.page(params[:page]).order('price ASC')
+             when 'price_high'
+               items.page(params[:page]).order('price DESC')
+             when 'manufacturer_asc'
+               items.page(params[:page]).order('manufacturer ASC')
+             when 'manufacturer_desc'
+               items.page(params[:page]).order('manufacturer DESC')
+             else
+               items.page(params[:page]).order('id DESC')
+             end
   end
 end

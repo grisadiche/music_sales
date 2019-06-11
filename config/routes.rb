@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   # get 'users/create'
   # get 'users/new'
@@ -12,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :users do
     collection do
-      get "profile"
+      get 'profile'
     end
   end
 end
