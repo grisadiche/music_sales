@@ -1,24 +1,14 @@
-# README
+# Music_Sales App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+*This app is designed to allow users to upload their own musical equipment for sale.*
 
-Things you may want to cover:
+<img src="music_sales_app_screenshot.png" width="550" height="400">
 
-* Ruby version
+* Ruby version: 2.4.2
 
-* System dependencies
+* Rails version: 5.2.3
 
-* Configuration
+* Database creation:
+>run rake db:seed.rb for test user and item examples
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Testing: Using Rspec + Capybara in /spec folder
