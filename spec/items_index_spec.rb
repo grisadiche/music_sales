@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Items Index', type: :feature do
-
   it 'has the page title "List of Equipment"' do
     visit items_path
     expect(page).to have_css(".jumbotron-heading", text: "List of Equipment")
@@ -34,5 +33,4 @@ RSpec.describe 'Items Index', type: :feature do
     click_button('Create Item')
     expect(page).to have_css("div", text: "You added a Test model for: test2@test.com")
   end
-
 end

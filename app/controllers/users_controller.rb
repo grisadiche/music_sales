@@ -16,11 +16,9 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @new_user.update(safe_params)
@@ -39,11 +37,9 @@ class UsersController < ApplicationController
     end
   end
 
-  def index
-  end
+  def index; end
 
-  def profile
-  end
+  def profile; end
 
   private
 
