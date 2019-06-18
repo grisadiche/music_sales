@@ -6,7 +6,7 @@
     .d-flex.justify-content-center
       .btn-group{"aria-label" => "button group", :role => "group"}
         %a= link_to "Edit User Info", edit_user_registration_path, :class => 'btn btn-secondary my-2'
-        %a= link_to "Delete User", user_path(current_user), method: :delete, data: { confirm: "Are you sure you'd like to delete?" }, :class => 'btn btn-danger my-2'
+        %a= link_to 'Delete User', registration_path(current_user), method: :delete, data: { confirm: "Are you sure you'd like to delete?" }, :class => 'btn btn-danger my-2'
     .d-flex.justify-content-center
       .btn-toolbar{"aria-label" => "Toolbar with button groups", :role => "toolbar"}
         .btn-group.mr-2{"aria-label" => "First group", :role => "group"}
@@ -19,6 +19,11 @@
             %a.dropdown-item= link_to "Price (High - Low)", profile_users_path(id: current_user.id, :sort => "price_high")
             %a.dropdown-item= link_to "Manufacturer (A-Z)", profile_users_path(id: current_user.id, :sort => "manufacturer_asc")
             %a.dropdown-item= link_to "Manufacturer (Z-A)", profile_users_path(id: current_user.id, :sort => "manufacturer_desc")
+    .d-flex.justify-content-center
+      -if current_user.api_key
+        %h6 API Key: #{current_user.api_key}
+      -else
+        %a.btn.btn-light.btn-sm{:href => "#{api_button_path}", :params => current_user.id} Create API Key
     .d-flex.justify-content-center
       = will_paginate items, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
 

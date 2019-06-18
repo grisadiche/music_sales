@@ -41,6 +41,8 @@ class UsersController < ApplicationController
 
   def profile; end
 
+  def api_button; end
+
   private
 
   def find_user

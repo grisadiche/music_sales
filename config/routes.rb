@@ -1,10 +1,7 @@
 Rails.application.routes.draw do
-  # get 'users/create'
-  # get 'users/new'
-  # get 'users_controller/new'
-  # get 'users_controller/create'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get '/', to: 'welcome#welcome'
+  get '/api_button', to: 'users#api_button', as: 'api_button'
+
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
@@ -13,6 +10,12 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get "profile"
+    end
+  end
+
+  namespace :api, defaults: { format: :json } do
+    scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
+      resources :items
     end
   end
 end

@@ -33,4 +33,16 @@ RSpec.describe 'Items Index', type: :feature do
     click_button('Create Item')
     expect(page).to have_css("div", text: "You added a Test model for: test2@test.com")
   end
+
+  it 'deletes an item for a user' do
+    visit user_session_path
+    fill_in('Email', with: 'Test2@test.com')
+    fill_in('Password', with: 'password')
+    click_button('Log In')
+    click_on('View your items')
+    accept_alert do
+      click_on('Delete Item')
+    end
+    expect(page).to have_css("div", text: "You deleted the Test model")
+  end
 end
