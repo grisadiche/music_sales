@@ -5,7 +5,6 @@ RSpec.describe Item, type: :model do
   subject { Item.new }
   describe 'validations' do
     it 'must have an associated user' do
-      item = Item.new
       subject.valid?
       expect(subject.errors.full_messages).to include("User must exist")
     end
@@ -55,19 +54,26 @@ RSpec.describe Item, type: :model do
     end
 
     it 'is invalid if price is over 100,000' do
-      subject.price = 100001
+      subject.price = 100_001
       subject.valid?
       expect(subject.errors.full_messages).to include("Price must be less than 100000")
     end
 
     it 'is invalid if weight is over 10,000' do
-      subject.weight = 10001
+      subject.weight = 10_001
       subject.valid?
       expect(subject.errors.full_messages).to include("Weight must be less than 10000")
     end
 
-    it 'is invalid if desription is over 160 characters' do
-      subject.description = "maybe this is over 160 characters long, but who knows thats a lot of characters to fill up an entire space. guess i didn't quite make it, hopefully this will help me reach my character goal"
+    it 'is invalid if description is over 160 characters' do
+      subject.description =
+        <<~HEREDOC
+          maybe this is over 160 characters long, but who
+          knows thats a lot of characters to fill up an
+          entire space. guess i didn't quite make it,
+          hopefully this will help me reach my character goal
+        HEREDOC
+
       subject.valid?
       expect(subject.errors.full_messages).to include("Description is too long (maximum is 160 characters)")
     end
@@ -92,6 +98,5 @@ RSpec.describe Item, type: :model do
       item = build(:item)
       expect(item.valid?).to eq(true)
     end
-
   end
 end

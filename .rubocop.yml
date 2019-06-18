@@ -1,0 +1,57 @@
+Metrics/AbcSize:
+  Max: 30
+  #15
+
+Metrics/BlockLength:
+  Max: 100
+  #100
+
+Metrics/LineLength:
+  Max: 120
+  #80
+
+Metrics/MethodLength:
+  Max: 20
+  #10
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/ConditionalAssignment:
+  Enabled: false
+  #corrected if statements to follow this - there is apparently a
+  #rubocop bug that throws this error for case statements  with an "else"
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'public/**/*'
+    - 'vendor/**/*'
+    - 'db/**/*'
+    - 'storage/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+    - 'spec/rails_helper.rb'
+    - 'spec/spec_helper.rb'
+    - 'config/initializers/simple_form.rb'
+    - 'config/initializers/simple_form_bootstrap.rb'
+    - 'config/initializers/devise.rb'
+    - 'config/environments/production.rb'
+    - 'test/test_helper.rb'
+
+
+
+
+

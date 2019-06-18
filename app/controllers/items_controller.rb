@@ -18,11 +18,9 @@ class ItemsController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @new_item.update(safe_params)
@@ -47,8 +45,7 @@ class ItemsController < ApplicationController
     end
   end
 
-  def index
-  end
+  def index; end
 
   private
 
@@ -61,25 +58,25 @@ class ItemsController < ApplicationController
   end
 
   def find_items
-    if current_user
-      items = Item.where.not(user_id: current_user.id)
-    else
-      items = Item.all
-    end
+    items = if current_user
+              Item.where.not(user_id: current_user.id)
+            else
+              Item.all
+            end
 
     sort = params[:sort]
 
     case sort
-      when "price_low"
-        @items = items.page(params[:page]).order('price ASC')
-      when "price_high"
-        @items = items.page(params[:page]).order('price DESC')
-      when "manufacturer_asc"
-        @items = items.page(params[:page]).order('manufacturer ASC')
-      when "manufacturer_desc"
-        @items = items.page(params[:page]).order('manufacturer DESC')
-      else
-        @items = items.page(params[:page]).order('id DESC')
+    when "price_low"
+      @items = items.page(params[:page]).order('price ASC')
+    when "price_high"
+      @items = items.page(params[:page]).order('price DESC')
+    when "manufacturer_asc"
+      @items = items.page(params[:page]).order('manufacturer ASC')
+    when "manufacturer_desc"
+      @items = items.page(params[:page]).order('manufacturer DESC')
+    else
+      @items = items.page(params[:page]).order('id DESC')
     end
   end
 end
