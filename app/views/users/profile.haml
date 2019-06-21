@@ -20,10 +20,13 @@
             %a.dropdown-item= link_to "Manufacturer (A-Z)", profile_users_path(id: current_user.id, :sort => "manufacturer_asc")
             %a.dropdown-item= link_to "Manufacturer (Z-A)", profile_users_path(id: current_user.id, :sort => "manufacturer_desc")
     .d-flex.justify-content-center
-      -if current_user.api_key
-        %h6 API Key: #{current_user.api_key}
-      -else
-        %a.btn.btn-light.btn-sm{:href => "#{api_button_path}", :params => current_user.id} Create API Key
+    -if current_user.api_key
+      %h6 API Key: #{current_user.api_key}
+      .d-flex.justify-content-center
+        .btn-group{"aria-label" => "button group", :role => "group"}
+          %a= link_to 'Regenerate API Key', api_button_path, method: :post, :class => 'btn btn-light btn-sm'
+    -else
+      %a= link_to 'Create API Key', api_button_path(), method: :post, :class => 'btn btn-light btn-sm'
     .d-flex.justify-content-center
       = will_paginate items, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
 

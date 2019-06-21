@@ -41,9 +41,19 @@ class UsersController < ApplicationController
 
   def profile; end
 
-  def api_button; end
+  def api_button
+    current_user.update(api_key: generate_authentication_token)
+    render "profile"
+  end
 
   private
+
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(api_key: token).first
+    end
+  end
 
   def find_user
     @new_user = User.find(params[:id])
