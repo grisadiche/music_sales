@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'database_cleaner'
 
 RSpec.describe 'Items Index', type: :feature do
   it 'has the page title "List of Equipment"' do
@@ -9,11 +8,11 @@ RSpec.describe 'Items Index', type: :feature do
 
   it 'adds a user' do
     visit new_user_registration_path
-    fill_in('Email', with: 'Test3@test.com')
+    fill_in('Email', with: 'Test@test.com')
     fill_in('Password', with: 'password')
     fill_in('Password confirmation', with: 'password')
     click_button('Sign up')
-    expect(page).to have_css("h1", text: "Thanks for logging in, test3@test.com")
+    expect(page).to have_css("h1", text: "Thanks for logging in, test@test.com")
   end
 
   it 'adds an item for a user' do

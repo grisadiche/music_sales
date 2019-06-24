@@ -1,6 +1,6 @@
 module Api
   module V1
-    class ItemsController < Api::V1::BaseController
+    class ItemsController < ApplicationController
       def index
         render json: {
           status: :ok,
@@ -9,10 +9,19 @@ module Api
       end
 
       def show
-        render json: {
-          status: :ok,
-          data: Api::V1::ItemPresenter.new(Item.find(params[:id])).present
-        }
+        respond_with Item.find(item[:id])
+      end
+
+      def create
+        respond_with Item.create(params[:item])
+      end
+
+      def update
+        respond_with Item.update(item[:id], item[:product])
+      end
+
+      def destroy
+        respond_with Item.destroy(item[:id])
       end
     end
   end
