@@ -24,16 +24,13 @@ jobs:
       - run:
           name: Configure Bundler
           command: |
-            gem update --system
+            sudo gem update --system
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV
-            echo | sudo gem uninstall bundler
             gem install bundler
 
-      - run: which bundler
-
       # Bundle install dependencies
-      - run: bundler install --without development --jobs=4 --retry=3 --path vendor/bundle
+      - run: bundle install --without development --jobs=4 --retry=3 --path vendor/bundle
 
       # Cache Dependencies
       - type: cache-save
@@ -46,7 +43,7 @@ jobs:
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
 
       # Setup the database
-      - run: bundler exec rake db:setup
+      - run: bundle exec rake db:setup
 
       # Run the tests
-      - run: bundler exec rspec
+      - run: bundle exec rspec
