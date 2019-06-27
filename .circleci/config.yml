@@ -1,0 +1,49 @@
+---
+version: 2
+jobs:
+  build:
+    working_directory: ~/music_sales
+    docker:
+      - image: circleci/ruby:2.4.2-node-browsers
+        environment:
+          RAILS_ENV: test
+      - image: postgres:9.5
+        environment:
+          POSTGRES_USER: user
+          POSTGRES_DB: music_sales_test
+          POSTGRES_PASSWORD: ""
+    steps:
+      - checkout
+
+      # Restore Cached Dependencies
+      - type: cache-restore
+        name: Restore bundle cache
+        key: music_sales-{{ checksum "Gemfile.lock" }}
+
+      # configure bundler
+      - run:
+          name: Configure Bundler
+          command: |
+            sudo gem update --system
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler:${BUNDLER_VERSION}
+
+      # Bundle install dependencies
+      - run: bundle install --without development --jobs=4 --retry=3 --path vendor/bundle
+
+      # Cache Dependencies
+      - type: cache-save
+        name: Store bundle cache
+        key: music_sales-{{ checksum "Gemfile.lock" }}
+        paths:
+          - vendor/bundle
+
+      # Wait for DB
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      # Setup the database
+      - run: bundle exec rake db:setup
+
+      # Run the tests
+      - run: bundle exec rspec

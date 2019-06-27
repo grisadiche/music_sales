@@ -1,4 +1,4 @@
-# Music_Sales App
+# Music_Sales App [![CircleCI](https://circleci.com/gh/grisadiche/music_sales.svg?style=svg)](https://circleci.com/gh/grisadiche/music_sales)
 
 *This app is designed to allow users to upload their own musical equipment for sale.*
 
