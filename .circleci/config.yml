@@ -9,7 +9,6 @@ jobs:
           PGHOST: localhost
           PGUSER: user
           RAILS_ENV: test
-          BUNDLER_VERSION: 2.0.1
       - image: postgres:9.5
         environment:
           POSTGRES_USER: user
