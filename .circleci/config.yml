@@ -22,6 +22,12 @@ jobs:
         name: Restore bundle cache
         key: music_sales-{{ checksum "Gemfile.lock" }}
 
+      - run:
+        name: Install system dependencies
+        command: |
+              gem update --system
+              gem install bundler
+
       # Bundle install dependencies
       - run: bundle install --path vendor/bundle
 
