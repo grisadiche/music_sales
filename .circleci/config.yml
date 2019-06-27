@@ -27,7 +27,10 @@ jobs:
             gem update --system
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV
+            echo | sudo gem uninstall bundler
             gem install bundler
+
+      - run: which bundler
 
       # Bundle install dependencies
       - run: bundler install --without development --jobs=4 --retry=3 --path vendor/bundle
