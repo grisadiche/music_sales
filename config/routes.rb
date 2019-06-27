@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get '/', to: 'welcome#welcome'
-  get '/api_button', to: 'users#api_button', as: 'api_button'
+  post '/api_button', to: 'users#api_button', as: 'api_button'
 
   devise_for :users, controllers: {
     sessions: 'users/sessions'
@@ -15,7 +15,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
-      resources :items
+      resources :items, only: [:show, :index]
+      resources :user_items
     end
   end
 end

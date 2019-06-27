@@ -11,7 +11,8 @@ module Api
         {
           manufacturer: item.manufacturer,
           model: item.model,
-          price: item.price
+          price: item.price,
+          id: item.id
         }
       end
     end
