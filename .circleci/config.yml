@@ -9,6 +9,7 @@ jobs:
           PGHOST: localhost
           PGUSER: user
           RAILS_ENV: test
+          BUNDLER_VERSION: 2.0.1
       - image: postgres:9.5
         environment:
           POSTGRES_USER: user
@@ -21,12 +22,6 @@ jobs:
       - type: cache-restore
         name: Restore bundle cache
         key: music_sales-{{ checksum "Gemfile.lock" }}
-
-      - run:
-        name: Install system dependencies
-        command: |
-              gem update --system
-              gem install bundler
 
       # Bundle install dependencies
       - run: bundle install --path vendor/bundle
