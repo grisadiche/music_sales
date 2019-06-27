@@ -24,10 +24,7 @@ jobs:
       - run:
           name: Configure Bundler
           command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler
-            gem update --system '2.7.9'
+            gem install bundler -v 2.0.1
 
       # Bundle install dependencies
       - run: bundle install --without development --jobs=4 --retry=3 --path vendor/bundle
