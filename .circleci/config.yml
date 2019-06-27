@@ -4,10 +4,8 @@ jobs:
   build:
     working_directory: ~/music_sales
     docker:
-      - image: circleci/ruby:2.4.2
+      - image: circleci/ruby:2.4.2-node-browsers
         environment:
-          PGHOST: localhost
-          PGUSER: user
           RAILS_ENV: test
       - image: postgres:9.5
         environment:
@@ -31,7 +29,7 @@ jobs:
             gem install bundler
 
       # Bundle install dependencies
-      - run: bundle install
+      - run: bundle install --without development --jobs=4 --retry=3 --path vendor/bundle
 
       # Cache Dependencies
       - type: cache-save
