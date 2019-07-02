@@ -54,7 +54,7 @@ class ItemsController < ApplicationController
   end
 
   def safe_params
-    params.require(:item).permit(:manufacturer, :model, :weight, :price, :description, :serial_number, :color, :image)
+    params.require(:item).permit(:manufacturer, :model, :weight, :price, :description, :serial_number, :color, :image, :stripe_token)
   end
 
   def find_items

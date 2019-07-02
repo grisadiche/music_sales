@@ -20,6 +20,8 @@ class Item < ApplicationRecord
 
   validate :image_format
 
+  attr_accessor :stripe_token
+
   private
 
   def image_format
