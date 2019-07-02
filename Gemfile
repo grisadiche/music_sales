@@ -42,6 +42,7 @@ group :development, :test do
   gem "database_cleaner"
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
+  gem 'ffaker'
   gem 'rspec-rails', '~> 3.8'
 end
 

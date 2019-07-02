@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'database_cleaner'
 
 RSpec.describe 'Items Index', type: :feature do
   it 'has the page title "List of Equipment"' do
@@ -8,11 +9,11 @@ RSpec.describe 'Items Index', type: :feature do
 
   it 'adds a user' do
     visit new_user_registration_path
-    fill_in('Email', with: 'Test@test.com')
+    fill_in('Email', with: 'Test3@test.com')
     fill_in('Password', with: 'password')
     fill_in('Password confirmation', with: 'password')
     click_button('Sign up')
-    expect(page).to have_css("h1", text: "Thanks for logging in, test@test.com")
+    expect(page).to have_css("h1", text: "Thanks for logging in, test3@test.com")
   end
 
   it 'adds an item for a user' do
@@ -32,5 +33,17 @@ RSpec.describe 'Items Index', type: :feature do
     page.attach_file('Image', Rails.root + 'spec/fixtures/files/Maeby.jpg')
     click_button('Create Item')
     expect(page).to have_css("div", text: "You added a Test model for: test2@test.com")
+  end
+
+  it 'deletes an item for a user' do
+    visit user_session_path
+    fill_in('Email', with: 'Test2@test.com')
+    fill_in('Password', with: 'password')
+    click_button('Log In')
+    click_on('View your items')
+    accept_alert do
+      click_on('Delete Item')
+    end
+    expect(page).to have_css("div", text: "You deleted the Test model")
   end
 end
