@@ -20,6 +20,14 @@ RSpec.describe 'User items API request spec', type: :request do
       expect(response.response_code).to eq(200)
     end
   end
-end
 
-# { 'Authorization' => "dGVzdF91c2VyQHRlc3QuY29tOjEyMzQ1Njc4OTAxMjM0NTY3ODkw" }
+  describe '#POST api/user_items' do
+    let(:items_response) { JSON.parse(response.body)['data'] }
+
+    it 'saves an item for a user via the api' do
+      post '/api/user_items' #some json. write it, or via factorybot?
+      expect() #item to be saved
+    end
+  end
+
+end
