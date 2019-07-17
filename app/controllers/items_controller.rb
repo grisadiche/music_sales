@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
+  before_action :pay_with_stripe, only: [:create]
   before_action :find_item, only: [:show, :edit, :update, :destroy]
   before_action :find_items, only: [:index]
 
@@ -48,6 +49,15 @@ class ItemsController < ApplicationController
   def index; end
 
   private
+
+  def pay_with_stripe
+    charge = Stripe::Charge.create({
+      amount: 999,
+      currency: 'usd',
+      description: 'Example charge',
+      source: safe_params[:stripe_token],
+    })
+  end
 
   def find_item
     @new_item = Item.find(params[:id])

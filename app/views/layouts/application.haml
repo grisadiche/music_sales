@@ -50,9 +50,10 @@
       };
       var card = elements.create('card', {style: style});
       card.mount('#payment_form');
-      $("form").submit(function(e){
+      $("form").submit(function(e) {
         e.preventDefault();
-        console.log(e)
+        console.log(e);
+        var $self = this;
         stripe.createToken(card).then(function(result) {
             console.log(result);
             if (result.error) {
@@ -61,7 +62,10 @@
               $(':submit').first().attr("disabled", false);
               console.log('oops');
             } else {
-              $("#stripe_token").val(result.token.id)
+              $("#stripe_token").val(result.token.id);
+              console.log(self);
+              debugger;
+              $(self).submit();
             }
           });
       });
