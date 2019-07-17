@@ -1,6 +1,8 @@
 module Api
   module V1
     class UserItemsController < AuthenticatedController
+      # protect_from_forgery with: :null_session, if: Proc.new {|c| c.request.format.json? }
+
       def index
         render json: {
           status: :ok,
@@ -15,12 +17,21 @@ module Api
         }
       end
 
-#should this actually go to the items_controller? would I inherit it above?
       def new
       end
 
       def create
-        JSON.parse(response.body)['data']
+        @new_item = Item.new
+        @new_item = current_user.items.build(safe_params)
+          if @new_item.save
+            render json: {
+              status: :created,
+            }
+          else
+            render json: {
+              error: "not_found"
+            }, status: :not_found
+        end
       end
 
       def update
@@ -29,7 +40,7 @@ module Api
       private
 
       def safe_params
-        params.require(:item).permit(:manufacturer, :model, :price, :image)
+        params.require(:user_item).permit(:manufacturer, :model, :weight, :price, :description, :serial_number, :color, :image) #add :image with base64 encoding
       end
     end
   end
