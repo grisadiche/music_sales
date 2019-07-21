@@ -1,7 +1,7 @@
 module Api
   module V1
     class UserItemsController < AuthenticatedController
-      # protect_from_forgery with: :null_session, if: Proc.new {|c| c.request.format.json? }
+      # protect_from_forgery with: :null_session
 
       def index
         render json: {
@@ -31,7 +31,7 @@ module Api
             render json: {
               error: "not_found"
             }, status: :not_found
-        end
+          end
       end
 
       def update
@@ -40,7 +40,8 @@ module Api
       private
 
       def safe_params
-        params.require(:user_item).permit(:manufacturer, :model, :weight, :price, :description, :serial_number, :color, :image) #add :image with base64 encoding
+        params.require(:user_item).permit(:manufacturer, :model, :weight, :price, :description, :serial_number, :color, :doc => [:doc_name, :doc_contents])
+        byebug
       end
     end
   end

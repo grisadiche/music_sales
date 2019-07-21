@@ -36,7 +36,7 @@
       - items.each do |x|
         .card{:style => "width: 22rem;"}
           .card-header= link_to "#{x.manufacturer} #{x.model}", item_path(x), :class => 'btn btn-outline-secondary'
-          %img.card-img-top{:alt => "Card image cap", :width => "240", :height => "320", :src => "#{(url_for(x.image))}"}
+          %img.card-img-top{:alt => "Card image cap", :width => "240", :height => "320", :src => "#{(url_for(x.doc)) if x.doc.attached?}"}
             .card-body
               %p.card-text= "#{x.description}"
               .d-flex.justify-content-between.align-items-center
