@@ -12,7 +12,7 @@
         %a= link_to "Back to List", items_path(), :class => 'btn btn-default btn-sm'
 .container
   .text-center
-    %img.img-fluid{:alt => "Responsive image", :src => "#{(url_for(@new_item.image))}"}
+    %img.img-fluid{:alt => "Responsive image", :src => "#{(url_for(@new_item.doc)) if @new_item.doc.attached?}"}
     .text-center
       %ul.list-group
         %li.list-group-item= "Description: " + @new_item.description
