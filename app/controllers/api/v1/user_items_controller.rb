@@ -16,7 +16,7 @@ module Api
       end
 
       def create
-        @new_item = current_user.items.build(safe_params.except(:image))
+        @new_item = current_user.items.build(safe_params.except(:image, :id))
         convert_and_attach_image!
         if @new_item.save
           render json: {
@@ -30,6 +30,18 @@ module Api
       end
 
       def update
+        @new_item = Item.find(params[:id])
+        @new_item.update(safe_params.except(:image, :id))
+        convert_and_attach_image!
+        if @new_item.save
+          render json: {
+            data: Api::V1::ItemPresenter.new(@new_item).present
+          }, status: :ok
+        else
+          render json: {
+            error: @new_item.errors.full_messages.join(', ')
+          }, status: :unprocessable_entity
+        end
       end
 
       private
@@ -54,7 +66,8 @@ module Api
                                             :description,
                                             :serial_number,
                                             :color,
-                                            :image)
+                                            :image,
+                                            :id)
       end
     end
   end

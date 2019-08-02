@@ -38,4 +38,19 @@ RSpec.describe 'User items API request spec', type: :request do
       expect(response.status).to eq(201)
     end
   end
+
+  describe '#PUT api/user_items' do
+    let(:params) do
+      { user_item: attributes_for(:item).merge(image: image_encoded) }.as_json
+    end
+
+    let(:image_encoded) do
+      File.read(File.join(Rails.root, 'spec', 'request', 'fixtures', 'base_64_image_example.txt'))
+    end
+
+    it 'updates an item for a user via the api' do
+      put '/api/user_items/11', params: params, headers: headers
+      expect(response.status).to eq(200)
+    end
+  end
 end
