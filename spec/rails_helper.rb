@@ -90,7 +90,7 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
-
+  config.include Rails.application.routes.url_helpers
   config.include Warden::Test::Helpers
   config.include FactoryBot::Syntax::Methods
 end

@@ -8,7 +8,6 @@ class ItemsController < ApplicationController
   end
 
   def create
-    byebug
     @new_item = current_user.items.build(safe_params)
     if @new_item.save
       flash[:success] = "You added a #{@new_item.model} for: #{current_user.email}."
