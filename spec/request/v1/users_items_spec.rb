@@ -40,17 +40,18 @@ RSpec.describe 'User items API request spec', type: :request do
   end
 
   describe '#PUT api/user_items' do
-    let!(:params) do
+    let(:params) do
       { user_item: attributes_for(:item).merge(image: image_encoded) }.as_json
     end
 
-    let!(:image_encoded) do
+    let(:image_encoded) do
       File.read(File.join(Rails.root, 'spec', 'request', 'fixtures', 'base_64_image_example.txt'))
     end
 
+    let(:item) { Item.first }
+
     it 'updates an item for a user via the api' do
-      # put '/api/user_items/update_path(item)', params: params, headers: headers
-      put '/api/user_items/18', params: params, headers: headers
+      put api_user_item_path(item), params: params, headers: headers
       expect(response.status).to eq(200)
     end
   end
