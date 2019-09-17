@@ -11,7 +11,6 @@
           = f.input :serial_number, hint: "update if known", input_html: {value: f.object.serial_number || 'unknown'}
           = f.input :color
           = f.input :image, as: :file, input_html: { accept: 'image/jpeg,image/png' }
-          %input{ name: 'item[stripe_token]', type: :hidden, id: :stripe_token }
           -unless @new_item.persisted?
             #payment_form
             %br
