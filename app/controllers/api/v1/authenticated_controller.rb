@@ -3,7 +3,9 @@ module Api
     class AuthenticatedController < Api::V1::BaseController
       include BasicAuthentication
       rescue_from BasicAuthentication::Error, with: :render_unauthorized
+      skip_before_action :verify_authenticity_token
       before_action :authenticate_user_from_token!
+
 
       private
 
