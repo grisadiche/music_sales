@@ -9,11 +9,12 @@ class ItemsController < ApplicationController
 
   def create
     @new_item = current_user.items.build(safe_params)
-    if @new_item.save
+    if save_item_to_database
       flash[:success] = "You added a #{@new_item.model} for: #{current_user.email}."
       redirect_to @new_item
     else
-      flash.now[:error] = "We were unable to add a new item - please try again"
+      byebug
+      flash.now[:error] = "We were unable to add a new item - please try again. Errors: #{@new_item.errors}" #check api controllers for reference
       render "new"
     end
   end
@@ -49,12 +50,35 @@ class ItemsController < ApplicationController
 
   private
 
+  def save_item_to_database
+    ActiveRecord::Base.transaction do
+      @new_item.save!
+      pay_with_stripe!
+    end
+    true
+  rescue ActiveRecord::RecordInvalid
+    false
+  rescue => e
+    @new_item.errors.add(:base, e.message)
+    false
+  end
+
+  def pay_with_stripe!
+    byebug
+    charge = Stripe::Charge.create({
+      amount: 999,
+      currency: 'usd',
+      description: 'Example charge',
+      source: safe_params[:stripe_token],
+    })
+  end
+
   def find_item
     @new_item = Item.find(params[:id])
   end
 
   def safe_params
-    params.require(:item).permit(:manufacturer, :model, :weight, :price, :description, :serial_number, :color, :image)
+    params.require(:item).permit(:manufacturer, :model, :weight, :price, :description, :serial_number, :color, :image, :stripe_token)
   end
 
   def find_items

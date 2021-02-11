@@ -11,7 +11,12 @@
           = f.input :serial_number, hint: "update if known", input_html: {value: f.object.serial_number || 'unknown'}
           = f.input :color
           = f.input :image, as: :file, input_html: { accept: 'image/jpeg,image/png' }
+          -unless @new_item.persisted?
+            #payment_form
+            %br
           .btn-toolbar{"aria-label" => "Toolbar with button groups", :role => "toolbar"}
-            .btn-group.mr-2{"aria-label" => "First group", :role => "group"}= f.button :submit, :class => 'btn btn-primary'
+            .btn-group.mr-2{"aria-label" => "First group", :role => "group"}= f.button :submit, :class => 'btn btn-primary', data: { disable_with: false }
             .btn-group.mr-2{"aria-label" => "Second group", :role => "group"}
             %a= link_to "Back to List", items_path, :class => 'btn btn-default'
+
+
